@@ -11,8 +11,9 @@ const EventSchema = z.object({
     name: z.nullable(z.string()),
     address: z.nullable(z.string()),
   }),
-  link: z.url(),
+  link: z.nullable(z.url()),
   tags: z.array(z.string().regex(/([a-z]|_)+/)),
+  source: z.string(),
 });
 const EventListSchema = z.array(EventSchema);
 

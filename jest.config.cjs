@@ -7,6 +7,7 @@ module.exports = {
   testMatch: ['<rootDir>/src/**/*.test.ts'],
   moduleNameMapper: {
     '^@src/(.*)$': '<rootDir>/src/$1',
+    '^@scrapers/(.*)$': '<rootDir>/scrapers/$1',
     '^@utils/(.*)$': '<rootDir>/src/utils/$1',
   },
 };

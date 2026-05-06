@@ -14,6 +14,7 @@
     "baseUrl": ".",
     "paths": {
       "@src/*": ["src/*"],
+      "@scrapers/*": ["src/scrapers/*"],
       "@utils/*": ["src/utils/*"]
     }
   },
