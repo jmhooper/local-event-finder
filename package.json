@@ -12,7 +12,8 @@
     "dev": "tsx src/index.ts",
     "dev:watch": "tsx watch src/index.ts",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "scraper": "tsx scripts/run_scraper.ts"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
