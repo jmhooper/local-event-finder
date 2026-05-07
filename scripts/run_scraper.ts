@@ -1,9 +1,13 @@
 process.loadEnvFile();
 
-import { scrapeKramerBooks } from '@src/scrapers/kramer-books';
+import { scrapeKramerBooks } from '@scrapers/kramer-books';
+import { scrapeLostCityBooks } from '@scrapers/lost-city-books';
+import { scrape730DC } from '@scrapers/seven-thirty-dc';
 
 const SCRAPERS = {
   'kramer-books': scrapeKramerBooks,
+  'lost-city-books': scrapeLostCityBooks,
+  'seven-thirty-dc': scrape730DC,
 };
 
 type ScraperName = keyof typeof SCRAPERS;

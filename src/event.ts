@@ -1,9 +1,13 @@
 import * as z from 'zod';
 import { colors } from '@utils/colors';
 
+/**
+ * All of the possible `source` property values on an event
+ */
 export enum EventSource {
   KRAMER_BOOKS = 'Kramer Books',
   LOST_CITY_BOOKS = 'Lost City Books',
+  SevenThirtyDC = '730DC',
 }
 
 const EventSourceEnum = z.enum(EventSource);
