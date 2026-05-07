@@ -1,3 +1,5 @@
+process.loadEnvFile();
+
 import { scrapeKramerBooks } from '@src/scrapers/kramer-books';
 
 const SCRAPERS = {

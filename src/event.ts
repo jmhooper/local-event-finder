@@ -1,7 +1,17 @@
 import * as z from 'zod';
 import { colors } from '@utils/colors';
 
-const EventSchema = z.object({
+export enum EventSource {
+  KRAMER_BOOKS = 'Kramer Books',
+  LOST_CITY_BOOKS = 'Lost City Books',
+}
+
+const EventSourceEnum = z.enum(EventSource);
+
+/**
+ * A schema for validating and parsing an Events
+ */
+export const EventSchema = z.object({
   name: z.string(),
   description: z.nullable(z.string()),
   date: z.nullable(z.iso.date()),
@@ -13,9 +23,12 @@ const EventSchema = z.object({
   }),
   link: z.nullable(z.url()),
   tags: z.array(z.string().regex(/([a-z]|_)+/)),
-  source: z.string(),
+  source: EventSourceEnum,
 });
-const EventListSchema = z.array(EventSchema);
+/**
+ * A schema for validating and parsing a list of Events
+ */
+export const EventListSchema = z.array(EventSchema);
 
 /**
  * An object that represents an event.

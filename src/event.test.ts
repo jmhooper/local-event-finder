@@ -9,7 +9,7 @@ const validEvent = {
   location: { name: 'The Anthem', address: '901 Wharf St SW, Washington, DC 20024' },
   link: 'https://example.com/jazz-night',
   tags: ['music'],
-  source: 'Jazz DC',
+  source: 'Kramer Books',
 };
 
 describe('parseEventListJSON', () => {

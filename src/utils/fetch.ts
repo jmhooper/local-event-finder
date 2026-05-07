@@ -55,6 +55,28 @@ const formatResponseBodyParseError = (
 };
 
 /**
+ * Makes a fetch request and returns the text from the response body
+ *
+ * @param url - The URL where the request will be made
+ * @param init - Init options to be passed to fetch
+ *
+ * @returns The text response from making the HTTP request
+ */
+export const fetchText = async (url: string, init?: RequestInit): Promise<string> => {
+  const httpResponse = await fetch(url, init);
+
+  const responseText = await httpResponse.text().catch(() => '');
+
+  if (!httpResponse.ok) {
+    throw new FetchJSONWithResponseSchemaError(
+      formatHTTPResponseErrorMessage(url, httpResponse.status, responseText)
+    );
+  }
+
+  return responseText;
+};
+
+/**
  * Makes a fetch request and expects a JSON response which it uses the given schema to parse.
  *
  * @param url - The URL where the request will be made
@@ -62,39 +84,27 @@ const formatResponseBodyParseError = (
  * @param init - Init options to be passed to fetch
  *
  * @returns The result of calling `schema.parse` on the parsed JSON response body
- *
- * @throws FetchJSONWithResponseSchemaError
- * This exception is thrown for errors that occur making the request or processing the response
  */
-export const fetchJSONWithResponseSchema: <T>(
+export const fetchJSONWithResponseSchema = async <T>(
   url: string,
   schema: z.ZodSchema<T>,
-  init: RequestInit
-) => Promise<T> = async (url, schema, init) => {
-  const httpResponse = await fetch(url, init);
+  init?: RequestInit
+): Promise<T> => {
+  const rawResponseBody = await fetchText(url, init);
 
-  const rawResponseBody = await httpResponse.text().catch(() => '');
-
-  if (!httpResponse.ok) {
-    throw new FetchJSONWithResponseSchemaError(
-      formatHTTPResponseErrorMessage(url, httpResponse.status, rawResponseBody)
-    );
-  }
-
-  let responseBody: any;
+  let responseBody: unknown;
   try {
     responseBody = JSON.parse(rawResponseBody);
-  } catch (err) {
+  } catch {
     throw new FetchJSONWithResponseSchemaError(formatResponseJSONParseError(url, rawResponseBody));
   }
 
-  const parsedResponseResult = schema.safeParse(responseBody);
-
-  if (!parsedResponseResult.success) {
+  const parseResult = schema.safeParse(responseBody);
+  if (!parseResult.success) {
     throw new FetchJSONWithResponseSchemaError(
-      formatResponseBodyParseError(url, responseBody, schema, parsedResponseResult.error)
+      formatResponseBodyParseError(url, responseBody, schema, parseResult.error)
     );
   }
 
-  return parsedResponseResult.data!;
+  return parseResult.data;
 };

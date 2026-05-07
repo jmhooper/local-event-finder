@@ -1,3 +1,5 @@
-import { scrapeKramerBooks } from './scrapers/kramer-books';
+process.loadEnvFile();
 
-scrapeKramerBooks().then((e) => console.log(e));
+import { scrapeLostCityBooks } from './scrapers/lost-city-books';
+
+scrapeLostCityBooks().then((c) => console.log(c));

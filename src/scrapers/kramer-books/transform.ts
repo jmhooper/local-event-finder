@@ -1,5 +1,5 @@
 import { DateTime } from '@utils/dayjs';
-import { Event } from '@src/event';
+import { Event, EventSource } from '@src/event';
 import { KramersEvent } from '@scrapers/kramer-books/fetch';
 import { stripHTMLTags } from '@src/utils/html';
 
@@ -20,6 +20,12 @@ const convertCategoryToTag = (categoryName: string) => {
     .replace(/[^a-z_]/g, '');
 };
 
+/**
+ * This function takes an array of events from the Kramers API and transform them into the {@link Event} format
+ *
+ * @param kramerEvents - An array of events in the {@link KramersEvent} format
+ * @returns A transformed list of events in the {@link Event} format
+ */
 export const transformEventData: (kramerEvents: KramersEvent[]) => Promise<Event[]> = async (
   kramerEvents: KramersEvent[]
 ) => {
@@ -35,7 +41,7 @@ export const transformEventData: (kramerEvents: KramersEvent[]) => Promise<Event
     },
     link: `https://kramers.com/events/${kramerEvent.id}`,
     tags: ['books', convertCategoryToTag(kramerEvent.category.name)],
-    source: 'Kramer Books',
+    source: EventSource.KRAMER_BOOKS,
   }));
 
   return Promise.resolve(transformedEvents);

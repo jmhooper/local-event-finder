@@ -11,11 +11,11 @@
     "declaration": true,
     "sourceMap": true,
     "types": ["jest", "node"],
-    "baseUrl": ".",
     "paths": {
-      "@src/*": ["src/*"],
-      "@scrapers/*": ["src/scrapers/*"],
-      "@utils/*": ["src/utils/*"]
+      "@src/*": ["./src/*"],
+      "@llm/*": ["./src/llm/*"],
+      "@scrapers/*": ["./src/scrapers/*"],
+      "@utils/*": ["./src/utils/*"]
     }
   },
   "include": ["src"],

@@ -23,6 +23,9 @@ const KramersEventResponseSchema = z.looseObject({
   rows: z.array(KramersEventSchema),
 });
 
+/**
+ * This type represents the structure of an event returned from the Kramers API
+ */
 export type KramersEvent = z.infer<typeof KramersEventSchema>;
 
 const fetchSessionId = async () => {

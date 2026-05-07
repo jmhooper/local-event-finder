@@ -1,4 +1,4 @@
-import { stripHTMLTags, convertHTMLToMarkdown } from './html';
+import { stripHTMLTags, convertHTMLToMarkdown, extractHTMLAtSelector } from './html';
 
 describe('stripHTMLTags', () => {
   it('removes HTML tags from a string', () => {
@@ -32,5 +32,25 @@ describe('convertHTMLToMarkdown', () => {
 
   it('converts headings to markdown', () => {
     expect(convertHTMLToMarkdown('<h1>Title</h1>')).toBe('# Title');
+  });
+});
+
+describe('extractHTMLAtSelector', () => {
+  it('returns the innerHTML of the first matching node', () => {
+    const html = '<div><p class="target">Hello <strong>world</strong></p></div>';
+    expect(extractHTMLAtSelector(html, '.target')).toBe('Hello <strong>world</strong>');
+  });
+
+  it('returns the innerHTML of only the first match when multiple nodes match', () => {
+    const html = '<ul><li>one</li><li>two</li><li>three</li></ul>';
+    expect(extractHTMLAtSelector(html, 'li')).toBe('one');
+  });
+
+  it('returns an empty string when nothing matches the selector', () => {
+    expect(extractHTMLAtSelector('<div><p>Hi</p></div>', '.missing')).toBe('');
+  });
+
+  it('returns an empty string when the matched node is empty', () => {
+    expect(extractHTMLAtSelector('<div class="target"></div>', '.target')).toBe('');
   });
 });
