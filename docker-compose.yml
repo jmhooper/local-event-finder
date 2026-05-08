@@ -1,0 +1,39 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+      POSTGRES_DB: local_event_aggregator
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d local_event_aggregator"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    init: true
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://app:${POSTGRES_PASSWORD}@postgres:5432/local_event_aggregator
+      LITELLM_API_HOST: ${LITELLM_API_HOST}
+      LITELLM_API_KEY: ${LITELLM_API_KEY}
+      PORT: "3000"
+      SCHEDULE_TZ: America/New_York
+    ports:
+      - "3000:3000"
+    networks:
+      - backend
+
+networks:
+  backend:
+
+volumes:
+  postgres_data:

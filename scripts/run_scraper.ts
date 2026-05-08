@@ -1,4 +1,4 @@
-process.loadEnvFile();
+import '@src/load-env';
 
 import prisma from '@src/db';
 import { SCRAPER_JOBS, ScraperJob } from '@src/jobs/queues';

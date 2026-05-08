@@ -1,4 +1,4 @@
-process.loadEnvFile();
+import '@src/load-env';
 
 import { spawn } from 'node:child_process';
 import logger from '@src/logger';
