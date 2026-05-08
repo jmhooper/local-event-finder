@@ -21,12 +21,8 @@ export const EventSchema = z.object({
   date: z.iso.date().optional(),
   start_time: z.iso.time().optional(),
   end_time: z.iso.time().optional(),
-  location: z
-    .object({
-      name: z.string().optional(),
-      address: z.string().optional(),
-    })
-    .optional(),
+  location_name: z.string().optional(),
+  location_address: z.string().optional(),
   link: z.url().optional(),
   tags: z.array(z.string().regex(/([a-z]|_)+/)),
   source: EventSourceEnum,

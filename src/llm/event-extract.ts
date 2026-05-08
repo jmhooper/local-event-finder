@@ -23,9 +23,8 @@ const SYSTEM_PROMPT = `You are a specialized data extraction assistant. Your tas
 - \`date\`: The event date in ISO 8601 format (YYYY-MM-DD). Use the start date if a date range is given. Do not inlcude any events for which a date cannot be determined. Today's date is {{ $today.format('yyyy-MM-dd') }}.
 - \`start_time\`: The event start time in 24-hour format (HH:MM). Omit if not present.
 - \`end_time\`: The event end time in 24-hour format (HH:MM). Omit if not present.
-- \`location\`: An object describing the venue. Omit the entire \`location\` object if no location information is available for the event.
-- \`location.name\`: The name of the venue or location for the event. Omit if no name is specified for the location.
-- \`location.address\`: The address of the location for the event. Omit if no address is specified.
+- \`location_name\`: The name of the venue or location for the event. Omit if no name is specified for the location.
+- \`location_address\`: The address of the location for the event. Omit if no address is specified.
 - \`link\`: The full absolute URL to the event or registration page. Omit if no link is found.
 - \'tags\`: A list of 1-6 tags to identify the event. Tags should be lower cased and underscored.
 - \`source\`: The source of the event data. This should be see to "{{ SOURCE_NAME }}".

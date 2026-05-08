@@ -34,10 +34,8 @@ export const transformEventData: (kramerEvents: KramersEvent[]) => Promise<Event
       name: kramerEvent.title,
       description: stripHTMLTags(kramerEvent.summary),
       date: convertDateFormat(kramerEvent.date),
-      location: {
-        name: kramerEvent.location_text,
-        ...(kramerEvent.location_text === 'Kramers' && { address: KRAMER_BOOKS_ADDRESS }),
-      },
+      location_name: kramerEvent.location_text,
+      ...(kramerEvent.location_text === 'Kramers' && { location_address: KRAMER_BOOKS_ADDRESS }),
       link: `https://kramers.com/events/${kramerEvent.id}`,
       tags: ['books', convertCategoryToTag(kramerEvent.category.name)],
       source: EventSource.KRAMER_BOOKS,

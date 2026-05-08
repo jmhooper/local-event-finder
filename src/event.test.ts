@@ -6,7 +6,8 @@ const validEvent = {
   date: '2026-06-15',
   start_time: '19:00:00',
   end_time: '22:00:00',
-  location: { name: 'The Anthem', address: '901 Wharf St SW, Washington, DC 20024' },
+  location_name: 'The Anthem',
+  location_address: '901 Wharf St SW, Washington, DC 20024',
   link: 'https://example.com/jazz-night',
   tags: ['music'],
   source: 'Kramer Books',
@@ -36,7 +37,7 @@ describe('parseEventListJSON', () => {
 
     expect(result).toHaveLength(1);
     expect(result[0].name).toBe('Jazz Night');
-    expect(result[0].location!.address).toBe('901 Wharf St SW, Washington, DC 20024');
+    expect(result[0].location_address).toBe('901 Wharf St SW, Washington, DC 20024');
   });
 
   it('accepts an event with all optional fields omitted', async () => {
@@ -53,7 +54,8 @@ describe('parseEventListJSON', () => {
     expect(result[0].date).toBeUndefined();
     expect(result[0].start_time).toBeUndefined();
     expect(result[0].end_time).toBeUndefined();
-    expect(result[0].location).toBeUndefined();
+    expect(result[0].location_name).toBeUndefined();
+    expect(result[0].location_address).toBeUndefined();
     expect(result[0].link).toBeUndefined();
   });
 });

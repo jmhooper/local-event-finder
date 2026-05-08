@@ -15,18 +15,18 @@ describe('transformEventData', () => {
     expect(event.tags).toEqual(['books', 'author_events']);
   });
 
-  it('sets the address when location_text is "Kramers"', async () => {
+  it('sets the location_address when location_text is "Kramers"', async () => {
     const result = await transformEventData([
       { ...eventApiResponseFixture, location_text: 'Kramers' },
     ]);
 
-    expect(result[0].location!.address).toBe('1517 Connecticut Ave NW, Washington, DC 20036');
+    expect(result[0].location_address).toBe('1517 Connecticut Ave NW, Washington, DC 20036');
   });
 
-  it('omits address when location_text is not "Kramers"', async () => {
+  it('omits location_address when location_text is not "Kramers"', async () => {
     const result = await transformEventData([eventApiResponseFixture]);
 
-    expect(result[0].location!.address).toBeUndefined();
+    expect(result[0].location_address).toBeUndefined();
   });
 
   it('omits start_time and end_time when absent', async () => {

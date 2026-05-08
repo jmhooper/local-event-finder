@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model ScraperRun {
+  id          Int       @id @default(autoincrement())
+  source      String
+  started_at  DateTime  @default(now())
+  finished_at DateTime?
+  errored_at  DateTime?
+  error       String?
+  events      Event[]
+
+  @@index([source, finished_at])
+  @@map("scraper_runs")
+}
+
+model Event {
+  id               Int        @id @default(autoincrement())
+  run_id           Int
+  run              ScraperRun @relation(fields: [run_id], references: [id], onDelete: Cascade)
+  source           String
+  name             String
+  description      String?
+  date             String?
+  start_time       String?
+  end_time         String?
+  location_name    String?
+  location_address String?
+  link             String?
+  tags             String[]
+
+  @@index([run_id])
+  @@map("events")
+}
