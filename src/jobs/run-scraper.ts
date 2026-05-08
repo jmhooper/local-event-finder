@@ -1,5 +1,5 @@
 import logger from '@src/logger';
-import { EventSource } from '@src/event';
+import { EventList, EventSource } from '@src/event';
 import { ScraperFunction } from '@scrapers/types';
 import prisma from '@src/db';
 
@@ -10,7 +10,7 @@ export interface RunScraperOptions {
 
 export interface RunScraperResult {
   runId: number;
-  eventCount: number;
+  events: EventList;
 }
 
 /**
@@ -55,7 +55,7 @@ export const runScraper = async ({
     logger.info(
       `[run-scraper] Run #${run.id} completed: ${events.length} events for ${source}`
     );
-    return { runId: run.id, eventCount: events.length };
+    return { runId: run.id, events };
   } catch (err) {
     const message = err instanceof Error ? (err.stack ?? err.message) : String(err);
     logger.error(`[run-scraper] Run #${run.id} failed for ${source}: ${message}`);

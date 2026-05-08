@@ -1,7 +1,17 @@
 import * as z from 'zod';
+import { Agent } from 'undici';
 import { colors } from '@utils/colors';
 import ModelName from '@llm/models';
 import { fetchJSONWithResponseSchema } from '@utils/fetch';
+
+/**
+ * undici defaults headersTimeout/bodyTimeout to 5 minutes each, which isn't
+ * enough for slow LLM completions. This dispatcher relaxes both to 30m.
+ */
+const llmDispatcher = new Agent({
+  headersTimeout: 30 * 60 * 1000,
+  bodyTimeout: 30 * 60 * 1000,
+});
 
 /**
  * This type represents a message in a LLM exchange
@@ -124,7 +134,8 @@ export const fetchChatCompletion = async (
       method: 'POST',
       headers: fetchChatCompletionHeaders(),
       body: JSON.stringify(requestBody),
-    }
+      dispatcher: llmDispatcher,
+    } as RequestInit
   );
 
   return apiResponse.choices[0].message.content;
