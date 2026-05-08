@@ -30,9 +30,10 @@ export const transformEventData: (kramerEvents: KramersEvent[]) => Promise<Event
   kramerEvents: KramersEvent[]
 ) => {
   const transformedEvents = kramerEvents.map((kramerEvent): Event => {
+    const description = stripHTMLTags(kramerEvent.summary);
     const event: Event = {
       name: kramerEvent.title,
-      description: stripHTMLTags(kramerEvent.summary),
+      description: description === '' ? undefined : description,
       date: convertDateFormat(kramerEvent.date),
       location_name: kramerEvent.location_text,
       ...(kramerEvent.location_text === 'Kramers' && { location_address: KRAMER_BOOKS_ADDRESS }),

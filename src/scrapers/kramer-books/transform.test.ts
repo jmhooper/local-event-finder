@@ -36,4 +36,10 @@ describe('transformEventData', () => {
     expect(result[0].start_time).toBeUndefined();
     expect(result[0].end_time).toBeUndefined();
   });
+
+  it('omits the description when the Kramers summary is a blank string', async () => {
+    const result = await transformEventData([{ ...eventApiResponseFixture, summary: '' }]);
+
+    expect(result[0].description).toBeUndefined();
+  });
 });
