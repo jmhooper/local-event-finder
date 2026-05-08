@@ -12,12 +12,7 @@ describe('extractEventDataWithLLM', () => {
     const events: Event[] = [
       {
         name: 'A reading',
-        description: null,
         date: '2026-05-08',
-        start_time: null,
-        end_time: null,
-        location: { name: null, address: null },
-        link: null,
         tags: ['reading'],
         source: EventSource.KRAMER_BOOKS,
       },

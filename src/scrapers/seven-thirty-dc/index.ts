@@ -18,7 +18,7 @@ export const scrape730DC: ScraperFunction = async () => {
   const model = ModelName.GPT_5;
 
   logger.info(`[730DC] Extracting events with ${model}`);
-  const events = await extractEventDataWithLLM(model, markdown, EventSource.LOST_CITY_BOOKS);
+  const events = await extractEventDataWithLLM(model, markdown, EventSource.SEVEN_THIRY_DC);
   logger.info(`[730DC] Extracted ${events.length} events with ${model}`);
   return events;
 };

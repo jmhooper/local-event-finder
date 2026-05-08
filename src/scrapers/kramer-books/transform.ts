@@ -29,20 +29,29 @@ const convertCategoryToTag = (categoryName: string) => {
 export const transformEventData: (kramerEvents: KramersEvent[]) => Promise<Event[]> = async (
   kramerEvents: KramersEvent[]
 ) => {
-  const transformedEvents = kramerEvents.map((kramerEvent) => ({
-    name: kramerEvent.title,
-    description: stripHTMLTags(kramerEvent.summary),
-    date: convertDateFormat(kramerEvent.date),
-    start_time: kramerEvent.start_time ? convertTimeFormat(kramerEvent.start_time) : null,
-    end_time: kramerEvent.end_time ? convertTimeFormat(kramerEvent.end_time) : null,
-    location: {
-      name: kramerEvent.location_text,
-      address: kramerEvent.location_text === 'Kramers' ? KRAMER_BOOKS_ADDRESS : null,
-    },
-    link: `https://kramers.com/events/${kramerEvent.id}`,
-    tags: ['books', convertCategoryToTag(kramerEvent.category.name)],
-    source: EventSource.KRAMER_BOOKS,
-  }));
+  const transformedEvents = kramerEvents.map((kramerEvent): Event => {
+    const event: Event = {
+      name: kramerEvent.title,
+      description: stripHTMLTags(kramerEvent.summary),
+      date: convertDateFormat(kramerEvent.date),
+      location: {
+        name: kramerEvent.location_text,
+        ...(kramerEvent.location_text === 'Kramers' && { address: KRAMER_BOOKS_ADDRESS }),
+      },
+      link: `https://kramers.com/events/${kramerEvent.id}`,
+      tags: ['books', convertCategoryToTag(kramerEvent.category.name)],
+      source: EventSource.KRAMER_BOOKS,
+    };
+
+    if (kramerEvent.start_time) {
+      event.start_time = convertTimeFormat(kramerEvent.start_time);
+    }
+    if (kramerEvent.end_time) {
+      event.end_time = convertTimeFormat(kramerEvent.end_time);
+    }
+
+    return event;
+  });
 
   return Promise.resolve(transformedEvents);
 };

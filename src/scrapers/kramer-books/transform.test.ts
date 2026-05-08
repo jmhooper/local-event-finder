@@ -20,20 +20,20 @@ describe('transformEventData', () => {
       { ...eventApiResponseFixture, location_text: 'Kramers' },
     ]);
 
-    expect(result[0].location.address).toBe('1517 Connecticut Ave NW, Washington, DC 20036');
+    expect(result[0].location!.address).toBe('1517 Connecticut Ave NW, Washington, DC 20036');
   });
 
-  it('sets address to null when location_text is not "Kramers"', async () => {
+  it('omits address when location_text is not "Kramers"', async () => {
     const result = await transformEventData([eventApiResponseFixture]);
 
-    expect(result[0].location.address).toBeNull();
+    expect(result[0].location!.address).toBeUndefined();
   });
 
-  it('sets start_time and end_time to null when absent', async () => {
+  it('omits start_time and end_time when absent', async () => {
     const { start_time, end_time, ...eventWithoutTimes } = eventApiResponseFixture;
     const result = await transformEventData([eventWithoutTimes]);
 
-    expect(result[0].start_time).toBeNull();
-    expect(result[0].end_time).toBeNull();
+    expect(result[0].start_time).toBeUndefined();
+    expect(result[0].end_time).toBeUndefined();
   });
 });

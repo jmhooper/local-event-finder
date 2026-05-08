@@ -36,6 +36,24 @@ describe('parseEventListJSON', () => {
 
     expect(result).toHaveLength(1);
     expect(result[0].name).toBe('Jazz Night');
-    expect(result[0].location.address).toBe('901 Wharf St SW, Washington, DC 20024');
+    expect(result[0].location!.address).toBe('901 Wharf St SW, Washington, DC 20024');
+  });
+
+  it('accepts an event with all optional fields omitted', async () => {
+    const minimalEvent = {
+      name: 'Jazz Night',
+      tags: ['music'],
+      source: 'Kramer Books',
+    };
+    const input = JSON.stringify([minimalEvent]);
+    const result = await parseEventListJSON(input);
+
+    expect(result).toHaveLength(1);
+    expect(result[0].description).toBeUndefined();
+    expect(result[0].date).toBeUndefined();
+    expect(result[0].start_time).toBeUndefined();
+    expect(result[0].end_time).toBeUndefined();
+    expect(result[0].location).toBeUndefined();
+    expect(result[0].link).toBeUndefined();
   });
 });

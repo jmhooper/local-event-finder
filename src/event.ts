@@ -7,7 +7,7 @@ import { colors } from '@utils/colors';
 export enum EventSource {
   KRAMER_BOOKS = 'Kramer Books',
   LOST_CITY_BOOKS = 'Lost City Books',
-  SevenThirtyDC = '730DC',
+  SEVEN_THIRY_DC = '730DC',
 }
 
 const EventSourceEnum = z.enum(EventSource);
@@ -17,15 +17,17 @@ const EventSourceEnum = z.enum(EventSource);
  */
 export const EventSchema = z.object({
   name: z.string(),
-  description: z.nullable(z.string()),
-  date: z.nullable(z.iso.date()),
-  start_time: z.nullable(z.iso.time()),
-  end_time: z.nullable(z.iso.time()),
-  location: z.object({
-    name: z.nullable(z.string()),
-    address: z.nullable(z.string()),
-  }),
-  link: z.nullable(z.url()),
+  description: z.string().optional(),
+  date: z.iso.date().optional(),
+  start_time: z.iso.time().optional(),
+  end_time: z.iso.time().optional(),
+  location: z
+    .object({
+      name: z.string().optional(),
+      address: z.string().optional(),
+    })
+    .optional(),
+  link: z.url().optional(),
   tags: z.array(z.string().regex(/([a-z]|_)+/)),
   source: EventSourceEnum,
 });
