@@ -15,8 +15,9 @@ services:
       timeout: 5s
       retries: 10
 
-  app:
-    build: .
+  local-event-aggregator:
+    build: ./local-event-aggregator
+    container_name: local-event-aggregator
     init: true
     depends_on:
       postgres:
@@ -27,8 +28,20 @@ services:
       LITELLM_API_KEY: ${LITELLM_API_KEY}
       PORT: "3000"
       SCHEDULE_TZ: America/New_York
+    networks:
+      - backend
+    extra_hosts:
+      - "litellm.lan:192.168.0.60"
+
+  local-event-ui:
+    build: ./local-event-ui
+    container_name: local-event-ui
+    depends_on:
+      - local-event-aggregator
     ports:
-      - "3000:3000"
+      - "8080:80"
+    environment:
+      EVENTS_API_URL: "http://local-event-aggregator:3000"
     networks:
       - backend
 
