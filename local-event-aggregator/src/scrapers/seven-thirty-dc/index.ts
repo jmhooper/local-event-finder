@@ -6,9 +6,9 @@ import ModelName from '@llm/models';
 import { extractEventDataWithLLM } from '@llm/event-extract';
 
 /**
- * This {@link ScraperFunction} reads events from the Lost City Books website and uses an LLM to extract those events into our {@link Event} format
+ * This {@link ScraperFunction} reads events from the 730DC website and uses an LLM to extract those events into our {@link Event} format
  *
- * @returns An array with elements of type {@link Event} that have been read from the Lost City Books website
+ * @returns An array with elements of type {@link Event} that have been read from the 730DC website
  */
 export const scrape730DC: ScraperFunction = async () => {
   logger.info('[730DC] Fetching 730DC Event Page Data');
