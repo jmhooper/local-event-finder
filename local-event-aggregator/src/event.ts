@@ -10,6 +10,7 @@ export enum EventSource {
   LOST_CITY_BOOKS = 'Lost City Books',
   SEVEN_THIRY_DC = '730DC',
   POPVILLE = 'Popville',
+  SUNS_CINEMA = 'Suns Cinema',
 }
 
 const EventSourceEnum = z.enum(EventSource);

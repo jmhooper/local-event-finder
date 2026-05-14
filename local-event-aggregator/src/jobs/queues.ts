@@ -5,6 +5,7 @@ import { scrapeDCPL } from '@scrapers/dcpl';
 import { scrapeLostCityBooks } from '@scrapers/lost-city-books';
 import { scrape730DC } from '@scrapers/seven-thirty-dc';
 import { scrapePopville } from '@scrapers/popville';
+import { scrapeSunsCinema } from '@src/scrapers/suns-cinema';
 
 export interface ScraperJob {
   jobName: string;
@@ -35,6 +36,12 @@ export const SCRAPER_JOBS: ScraperJob[] = [
     source: EventSource.LOST_CITY_BOOKS,
     scraper: scrapeLostCityBooks,
     cron: '0 6 * * 3',
+  },
+  {
+    jobName: 'scrape-suns-cinema',
+    source: EventSource.SUNS_CINEMA,
+    scraper: scrapeSunsCinema,
+    cron: '20 6 * * 3',
   },
   {
     jobName: 'scrape-730dc',
