@@ -6,6 +6,7 @@ import { colors } from '@utils/colors';
  */
 export enum EventSource {
   KRAMER_BOOKS = 'Kramer Books',
+  DCPL = 'DC Public Library',
   LOST_CITY_BOOKS = 'Lost City Books',
   SEVEN_THIRY_DC = '730DC',
   POPVILLE = 'Popville',
